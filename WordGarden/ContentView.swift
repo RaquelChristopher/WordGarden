@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var gameStatusMessage = "How Many Guesses to Uncover the Hidden Word?"
     @State private var currentWord = 0 //index in wordsToGuess
     @State private var guessedLetter = ""
+    @State private var imageName = "flower8"
+    @State private var playAgainHidden = true
     
     var body: some View {
         
@@ -30,41 +32,55 @@ struct ContentView: View {
                 Text("Words in Game: \(wordsToGuess.count)")
             }
             }
+            .padding(.horizontal)
             
             Spacer()
             Text(gameStatusMessage)
                 .font(.title)
                 .multilineTextAlignment(.center)
+                .padding()
             
             //TODO: Switch to wordsToGuess[currentWord]
             Text("_ _ _ _ _")
                 .font(.title)
             
-            
-            HStack {
-                TextField("", text: $guessedLetter)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 30)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(.gray, lineWidth: 2)
+            if playAgainHidden {
+                
+                
+                HStack {
+                    TextField("", text: $guessedLetter)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 30)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.gray, lineWidth: 2)
+                        }
+                    
+                    Button("Guess a Letter:") {
+                        //TODO: Guess a Letter button action here
+                        playAgainHidden = false
                     }
-            
-            Button("Guess a Letter:") {
-                //TODO: Guess a Letter button action here
-            }
-            .buttonStyle(.bordered)
-            .tint(.mint)
+                    .buttonStyle(.bordered)
+                    .tint(.mint)
+                }
+            } else {
+                Button("Another Word?") {
+                    //TODO: Add Another Word Action Here
+                    playAgainHidden = true
+                    
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.mint)
             }
             
             Spacer()
             
-            Image("flower8")
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
             
         }
-        .padding()
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
